@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Quotes</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+</head>
+<body>
+<section>
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Quotes</h1>
+        </div>
+    </div>
+</section>
+
+<section class="container">
+    <form method="POST" th:action="@{/quotes/add}" th:object="${quote}"
+          class="form-horizontal" enctype="multipart/form-data">
+        <fieldset>
+            <legend>Add New Quote</legend>
+
+            <div class="form-group">
+                <label class="control-label col-lg-2 col-lg-2" for="description">
+                    Quote Description
+                </label>
+                <div class="col-lg-10">
+                    <input type="text" id="description" th:field="*{description}"
+                           class="form:input-large"/>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-lg-2 col-lg-2" for="owner">
+                    Quote Owner
+                </label>
+                <div class="col-lg-10">
+                    <input type="text" id ="owner" th:field="*{owner}"
+                           class="form:input-large"/>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <div class="col-lg-offset-2 col-lg-10">
+                    <input type="submit" id="btnAdd" class="btn btn-primary"
+                           value="Add"/>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</section>
+
+
+</body>
+</html>

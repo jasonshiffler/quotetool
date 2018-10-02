@@ -1,54 +1,50 @@
 package com.jshiffler.quotetool.quotetool.Controllers;
 
+
 import com.jshiffler.quotetool.quotetool.model.Quote;
-import com.jshiffler.quotetool.quotetool.model.QuoteLine;
-import com.jshiffler.quotetool.quotetool.repository.QuoteLineRepository;
-import com.jshiffler.quotetool.quotetool.repository.QuoteRepository;
 import com.jshiffler.quotetool.quotetool.service.QuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.List;
-
-@RestController
-@RequestMapping("api/v1")
+@Controller
+@RequestMapping("/")
 public class HomeController {
 
-
-    @Autowired
-    private QuoteLineRepository quoteLineRepository;
 
     @Autowired
     private QuoteService quoteService;
 
 
-    @RequestMapping(value = "quote", method = RequestMethod.GET)
-    public List<Quote> list() {
+    @RequestMapping
+    public String landingPage() {
 
-        return quoteService.getAllQuotes();
-    }
-
-    @RequestMapping(value = "quote/owner/{owner}", method = RequestMethod.GET)
-    public List<Quote> getOwner(@PathVariable("owner") String owner) {
-
-        return quoteService.getQuoteByOwner(owner);
+        return "landing-page";
     }
 
 
-    @RequestMapping(value = "quote", method = RequestMethod.POST)
-    public void create(@RequestBody Quote quote) {
+    @RequestMapping(value = "/quotes",method = RequestMethod.GET )
+    public String quotesPage() {
+
+        return "addquote";
+    }
+
+    @RequestMapping(value = "/quotes/add", method = RequestMethod.GET)
+    public String quoteForm(Model model) {
+        model.addAttribute("quote", new Quote());
+        return "addquote";
+    }
+
+    @RequestMapping(value = "/quotes/add", method = RequestMethod.POST)
+    public String quoteSubmit(@ModelAttribute("quote") Quote quote) {
 
         quoteService.createQuote(quote);
+        return "landing-page";
+
     }
-
-/*
-
-    @RequestMapping(value = "quoteline/quoteid/{id}", method = RequestMethod.GET)
-    public List<QuoteLine> getQuoteLines(@PathVariable("id") Long id) {
-
-        return quoteLineRepository.findByIdIs(id);
-    }
-*/
 
 
 }
