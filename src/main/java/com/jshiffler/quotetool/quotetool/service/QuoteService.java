@@ -12,6 +12,13 @@ List<Quote> getQuoteByOwner(String Owner);
 
 List<Quote> getAllQuotes();
 
+Quote getQuoteById(Long id);
+
 void createQuote(Quote quote);
+
+void updateQuote(Quote quote);
+
+void deleteQuote(Long id);
+
 
 }

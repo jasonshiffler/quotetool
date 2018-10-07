@@ -4,6 +4,9 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.format.DateTimeFormatter;
 
 @Entity
 public class Quote {
@@ -13,13 +16,22 @@ public class Quote {
     Long id;
     String description;
     String owner;
+    String creationTime; // When the Quote was created
 
-    public Quote() { }
+    public Quote() {
+
+        LocalDateTime now = LocalDateTime.now();
+        this.creationTime = DateTimeFormatter.ISO_INSTANT.format(now.toInstant(ZoneOffset.UTC));
+    }
 
     public Quote(Long id, String description, String owner) {
+
+        LocalDateTime now = LocalDateTime.now();
+
         this.id = id;
         this.description = description;
         this.owner = owner;
+        this.creationTime = DateTimeFormatter.ISO_INSTANT.format(now.toInstant(ZoneOffset.UTC));
 
     }
 
@@ -45,5 +57,17 @@ public class Quote {
 
     public void setOwner(String owner) {
         this.owner = owner;
+    }
+
+    public String getCreationTime() { return creationTime; }
+
+    @Override
+    public String toString() {
+        return "Quote{" +
+                "id=" + id +
+                ", description='" + description + '\'' +
+                ", owner='" + owner + '\'' +
+                ", creationTime='" + creationTime + '\'' +
+                '}';
     }
 }

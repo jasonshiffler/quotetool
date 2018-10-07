@@ -3,17 +3,18 @@ package com.jshiffler.quotetool.quotetool.Controllers;
 
 import com.jshiffler.quotetool.quotetool.model.Quote;
 import com.jshiffler.quotetool.quotetool.service.QuoteService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 @RequestMapping("/")
 public class HomeController {
 
+    Logger logger = LoggerFactory.getLogger(HomeController.class);
 
     @Autowired
     private QuoteService quoteService;
@@ -26,25 +27,55 @@ public class HomeController {
     }
 
 
-    @RequestMapping(value = "/quotes",method = RequestMethod.GET )
-    public String quotesPage() {
+    @GetMapping("/quotes/list")
+    public String quotesPage(Model model) {
 
-        return "addquote";
+        model.addAttribute("quotes", quoteService.getAllQuotes());
+        return "listquotes";
     }
 
-    @RequestMapping(value = "/quotes/add", method = RequestMethod.GET)
+
+    @GetMapping("/quotes/add")
     public String quoteForm(Model model) {
+
         model.addAttribute("quote", new Quote());
         return "addquote";
     }
 
-    @RequestMapping(value = "/quotes/add", method = RequestMethod.POST)
+    @PostMapping("/quotes/add")
     public String quoteSubmit(@ModelAttribute("quote") Quote quote) {
 
         quoteService.createQuote(quote);
-        return "landing-page";
+        return "redirect:/quotes/list";
+    }
+
+    @GetMapping("/quotes/edit/{id}")
+    public String quoteForm(@PathVariable("id") Long id, Model model) {
+
+        model.addAttribute("quote", quoteService.getQuoteById(id));
+        return "editquote";
+    }
+
+
+    @PostMapping("/quotes/edit")
+    public String quoteUpdate(@ModelAttribute("quote") Quote quote) {
+
+        logger.info("id is " + quote.getId());
+        logger.info("Description is " + quote.getDescription());
+        quoteService.updateQuote(quote);
+        return "redirect:/quotes/list";
 
     }
+
+    @GetMapping("/quotes/delete/{id}")
+    public String quoteDelete(@PathVariable("id") Long id, Model model) {
+
+        model.addAttribute("quote", quoteService.getQuoteById(id));
+        quoteService.deleteQuote(id);
+        return "redirect:/quotes/list";
+    }
+
+
 
 
 }

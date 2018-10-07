@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:form="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Quotes</title>
+    <link rel="stylesheet"
+          href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+</head>
+<body>
+<section>
+    <div class="jumbotron">
+        <div class="container">
+            <h1>Quotes</h1>
+        </div>
+    </div>
+</section>
+
+<section class="container">
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Quote Number</th>
+            <th scope="col">Description</th>
+            <th scope="col">Owner</th>
+            <th scope="col">Created</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <tr th:each="quote : ${quotes}">
+            <td><span th:text="${quote.id}">id</span></td>
+            <td><span th:text="${quote.description}">description</span></td>
+            <td><span th:text="${quote.owner}">owner</span></td>
+            <td><span th:text="${quote.creationTime}">created</span></td>
+            <td><a th:href="@{/quotes/delete/{quoteId}(quoteId=${quote.id})}">Delete</a>
+                <a th:href="@{/quotes/edit/{quoteId}(quoteId=${quote.id})}">Edit</a>
+            </td>
+        </tr>
+        </tbody>
+
+
+    </table>
+    <div class="container">
+
+        <a class="btn btn-primary" href="/quotes/add" role="button">Create Quote</a>
+        <a class="btn btn-primary" href="/" role="button">Main Page</a>
+
+    </div>
+
+</section>
+
+
+</body>
+</html>

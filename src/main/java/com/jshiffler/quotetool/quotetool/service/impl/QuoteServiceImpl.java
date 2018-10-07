@@ -18,6 +18,7 @@ public class QuoteServiceImpl implements QuoteService {
 
 
     public List<Quote> getAllQuotes() {
+
         return quoteRepository.findAll();
     }
 
@@ -30,6 +31,22 @@ public class QuoteServiceImpl implements QuoteService {
     public void createQuote(Quote quote) {
 
         quoteRepository.saveAndFlush(quote);
+    }
 
+    public void updateQuote(Quote quote) {
+
+        quoteRepository.saveAndFlush(quote);
+    }
+
+
+    @Override
+    public Quote getQuoteById(Long id) {
+        return quoteRepository.findByIdIs(id);
+    }
+
+    @Override
+    public void deleteQuote(Long id) {
+
+        quoteRepository.deleteByIdIs(id);
     }
 }

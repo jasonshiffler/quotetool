@@ -11,6 +11,9 @@ public interface QuoteRepository extends JpaRepository<com.jshiffler.quotetool.q
 
     List<Quote> findByOwner(String owner);
 
+    Quote findByIdIs(Long id);
+
+    Long deleteByIdIs(Long id);
 }
 
 

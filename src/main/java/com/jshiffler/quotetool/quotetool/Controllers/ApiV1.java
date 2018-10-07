@@ -4,6 +4,7 @@ import com.jshiffler.quotetool.quotetool.model.Quote;
 import com.jshiffler.quotetool.quotetool.model.QuoteLine;
 import com.jshiffler.quotetool.quotetool.repository.QuoteLineRepository;
 import com.jshiffler.quotetool.quotetool.repository.QuoteRepository;
+import com.jshiffler.quotetool.quotetool.service.QuoteLineService;
 import com.jshiffler.quotetool.quotetool.service.QuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,7 +17,7 @@ public class ApiV1 {
 
 
     @Autowired
-    private QuoteLineRepository quoteLineRepository;
+    private QuoteLineService quoteLineService;
 
     @Autowired
     private QuoteService quoteService;
@@ -39,6 +40,26 @@ public class ApiV1 {
     public void create(@RequestBody Quote quote) {
 
         quoteService.createQuote(quote);
+    }
+
+    @RequestMapping(value = "quotes/addline", method = RequestMethod.POST)
+    public void addLineToQuote(@RequestBody QuoteLine line) {
+
+        quoteLineService.addLine(line);
+    }
+
+    @RequestMapping(value = "quotes/deleteline/{id}", method = RequestMethod.DELETE)
+    public void addLineToQuote(@PathVariable("id") Long id) {
+
+        quoteLineService.deleteLine(id);
+    }
+
+
+
+    @RequestMapping(value = "quotes/getalllines", method = RequestMethod.GET)
+    public List<QuoteLine> listAllQuoteLines() {
+
+        return quoteLineService.getAllQuoteLines();
     }
 
 /*

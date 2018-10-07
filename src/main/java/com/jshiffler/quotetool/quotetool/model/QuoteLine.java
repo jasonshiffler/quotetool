@@ -12,20 +12,28 @@ public class QuoteLine {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
     Long quoteId;
-    String product_name;
-    String product_manufacturer;
-    float unit_price;
+    String partNumber;
+    String productDescription;
+    String productManufacturer;
+    float unitPrice;
     int quantity;
     float discount;
 
-    public QuoteLine(Long quoteId, String product_name, String product_manufacturer, float unit_price,
-                     int quantity, float discount) {
-        this.quoteId = quoteId;
-        this.product_name = product_name;
-        this.product_manufacturer = product_manufacturer;
-        this.unit_price = unit_price;
-        this.quantity = quantity;
-        this.discount = discount;
+
+    QuoteLine(Long quoteId, String partNumber, String productDescription, String productManufacturer, float unitPrice,
+              int quantity, float discount) {
+
+        this.setQuoteId(quoteId);
+        this.setPartNumber(partNumber);
+        this.setProductDescription(productDescription);
+        this.setProductManufacturer(productManufacturer);
+        this.setUnitPrice(unitPrice);
+        this.setQuantity(quantity);
+        this.setDiscount(discount);
+
+    }
+
+    public QuoteLine() {
     }
 
     public Long getId() {
@@ -44,28 +52,36 @@ public class QuoteLine {
         this.quoteId = quoteId;
     }
 
-    public String getProduct_name() {
-        return product_name;
+    public String getPartNumber() {
+        return partNumber;
     }
 
-    public void setProduct_name(String product_name) {
-        this.product_name = product_name;
+    public void setPartNumber(String partNumber) {
+        this.partNumber = partNumber;
     }
 
-    public String getProduct_manufacturer() {
-        return product_manufacturer;
+    public String getProductDescription() {
+        return productDescription;
     }
 
-    public void setProduct_manufacturer(String product_manufacturer) {
-        this.product_manufacturer = product_manufacturer;
+    public void setProductDescription(String productDescription) {
+        this.productDescription = productDescription;
     }
 
-    public float getUnit_price() {
-        return unit_price;
+    public String getProductManufacturer() {
+        return productManufacturer;
     }
 
-    public void setUnit_price(float unit_price) {
-        this.unit_price = unit_price;
+    public void setProductManufacturer(String productManufacturer) {
+        this.productManufacturer = productManufacturer;
+    }
+
+    public float getUnitPrice() {
+        return unitPrice;
+    }
+
+    public void setUnitPrice(float unitPrice) {
+        this.unitPrice = unitPrice;
     }
 
     public int getQuantity() {
